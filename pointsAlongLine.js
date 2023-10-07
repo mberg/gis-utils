@@ -6,7 +6,7 @@
 // Ensure turf is installed
 // npm install @turf/turf fs
 // 
- 
+
 const turf = require('@turf/turf');
 const fs = require('fs');
 
@@ -36,6 +36,8 @@ try {
             for (let i = 0; i <= length; i += distanceInterval) {
                 const point = turf.along(feature, i, {units: 'miles'});
                 point.properties.mile = i;
+                point.properties.latitude = point.geometry.coordinates[1];
+                point.properties.longitude = point.geometry.coordinates[0];
                 allPoints.push(point);
             }
         } else if (feature.geometry.type === "MultiLineString") {
@@ -45,6 +47,8 @@ try {
                 for (let i = 0; i <= length; i += distanceInterval) {
                     const point = turf.along(lineFeature, i, {units: 'miles'});
                     point.properties.mile = i;
+                    point.properties.latitude = point.geometry.coordinates[1];
+                    point.properties.longitude = point.geometry.coordinates[0];
                     allPoints.push(point);
                 }
             });
